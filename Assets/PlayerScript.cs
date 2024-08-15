@@ -1,12 +1,14 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 public class PlayerScript : MonoBehaviour
 {
     public Rigidbody playerRigidbody;
-    public float moveSpeed = 5;
-    
+    public float forwardForce = 1000f;
+
+    public float sideForce = 500f;
     // Start is called before the first frame update
     void Start()
     {
@@ -16,10 +18,14 @@ public class PlayerScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.W))
+        playerRigidbody.AddForce(0,0,forwardForce*Time.deltaTime);
+        if (Input.GetKey(KeyCode.A))
         {
-            print("is w");
-            playerRigidbody.velocity = Vector3.forward * moveSpeed;
+            playerRigidbody.AddForce(-sideForce * Time.deltaTime,0,0);
+        }
+        if (Input.GetKey(KeyCode.D))
+        {
+            playerRigidbody.AddForce(sideForce * Time.deltaTime,0,0);
         }
     }
 }
